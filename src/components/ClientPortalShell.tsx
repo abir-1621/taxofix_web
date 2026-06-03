@@ -1,17 +1,10 @@
-import { UserCircle2 } from "lucide-react";
+"use client";
 
 import { AppShell } from "@/components/AppShell";
-import { Card } from "@/components/ui/card";
+import { useI18n } from "@/components/I18nProvider";
 
 export function ClientPortalShell({ children }: { children: React.ReactNode }) {
-  return (
-    <AppShell>
-      <Card className="mb-5 border-[#E11D48]/20 bg-[#E11D48]/5">
-        <div className="flex items-center gap-2 text-sm font-medium text-[#E11D48]">
-          <UserCircle2 className="h-4 w-4" /> Client Portal
-        </div>
-      </Card>
-      {children}
-    </AppShell>
-  );
+  const { t } = useI18n();
+
+  return <AppShell portalLabel={t("clientPortal")}>{children}</AppShell>;
 }

@@ -1,4 +1,7 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
+import { useI18n } from "@/components/I18nProvider";
 
 const variants = {
   active: "success",
@@ -17,5 +20,7 @@ const variants = {
 } as const;
 
 export function StatusBadge({ status }: { status: keyof typeof variants }) {
-  return <Badge variant={variants[status]}>{status.replaceAll("_", " ")}</Badge>;
+  const { t } = useI18n();
+
+  return <Badge variant={variants[status]}>{t(status)}</Badge>;
 }

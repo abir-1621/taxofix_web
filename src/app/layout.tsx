@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+
+import { I18nProvider } from "@/components/I18nProvider";
+import { MockAuthProvider } from "@/components/MockAuthProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full font-taxofix">{children}</body>
+      <body className="min-h-full font-taxofix">
+        <I18nProvider>
+          <MockAuthProvider>{children}</MockAuthProvider>
+        </I18nProvider>
+      </body>
     </html>
   );
 }

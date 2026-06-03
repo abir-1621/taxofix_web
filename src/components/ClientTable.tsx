@@ -1,21 +1,28 @@
+"use client";
+
 import Link from "next/link";
 
+import { useI18n } from "@/components/I18nProvider";
 import { StatusBadge } from "@/components/StatusBadge";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from "@/components/ui/table";
 import type { Client } from "@/lib/types";
 
 export function ClientTable({ rows }: { rows: Client[] }) {
+  const { t } = useI18n();
+
   return (
-    <Card>
-      <CardTitle className="mb-4">Client Portfolio</CardTitle>
+    <Card className="overflow-hidden p-0">
+      <div className="border-b border-slate-100 px-5 py-4">
+        <CardTitle>{t("clientPortfolio")}</CardTitle>
+      </div>
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeaderCell>Client</TableHeaderCell>
-            <TableHeaderCell>Type</TableHeaderCell>
-            <TableHeaderCell>Status</TableHeaderCell>
-            <TableHeaderCell>Assigned</TableHeaderCell>
+            <TableHeaderCell>{t("client")}</TableHeaderCell>
+            <TableHeaderCell>{t("type")}</TableHeaderCell>
+            <TableHeaderCell>{t("status")}</TableHeaderCell>
+            <TableHeaderCell>{t("assigned")}</TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -26,7 +33,7 @@ export function ClientTable({ rows }: { rows: Client[] }) {
                   {client.name}
                 </Link>
               </TableCell>
-              <TableCell className="capitalize">{client.type}</TableCell>
+              <TableCell>{t(client.type)}</TableCell>
               <TableCell>
                 <StatusBadge status={client.status} />
               </TableCell>
