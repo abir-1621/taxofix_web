@@ -27,7 +27,17 @@
 - Ran `npm.cmd run lint` successfully.
 - Ran `npm.cmd run build` successfully.
 
+### Completed Follow-up Milestone Pass
+- Upgraded Clients page with search, status/type filters, TIN/BIN, assigned staff, active cases, pending documents, and quick profile actions.
+- Upgraded Client Detail page with profile summary, tax/VAT identifiers, contact data, assigned staff, client users, related cases, VAT periods, files, missing-document checklist, activity timeline, and notes.
+- Upgraded Tax Cases page/table with case type, assessment year, tax period, client, accountant, reviewer, partner assignment indicator, status, deadline, and actions.
+- Upgraded VAT Period cards with client, year/month, sales, purchases, output/input VAT, net payable, missing document indicators, status, and details action.
+- Upgraded Files page components with document category selection, case/VAT target selection, drag/drop placeholder, progress, file preview, review actions, replacement/clarification flow, and review notes.
+- Upgraded Partner Firms page with partner status, contact person, service scope, assigned cases, revision rate, workload, approve/suspend actions, and partner assignment form with access levels.
+- Browser sanity checked `/clients`, `/clients/c1`, `/tax-cases`, `/vat`, `/files`, and `/partner-firms`.
+- Re-ran `npm.cmd run lint` and `npm.cmd run build` successfully.
+
 ### Remaining TODOs
-- Improve clients/details workflow depth.
-- Improve tax cases, VAT periods, files, and partner delegation screens.
-- Add richer API data-layer functions and loading/error states.
+- Add real data-loading states once backend integration begins.
+- Add deeper mobile visual QA and empty states for all table/list combinations.
+- Replace mock-only form actions with API calls when auth/API integration starts.

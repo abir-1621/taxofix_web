@@ -3,8 +3,11 @@
 import { PartnerAssignmentPanel } from "@/components/PartnerAssignmentPanel";
 import { FirmPortalShell } from "@/components/FirmPortalShell";
 import { useI18n } from "@/components/I18nProvider";
+import { StatusBadge } from "@/components/StatusBadge";
+import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
-import { approvedPartners } from "@/lib/mock-data";
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from "@/components/ui/table";
+import { partnerFirms } from "@/lib/mock-data";
 
 export default function PartnerFirmsPage() {
   const { t } = useI18n();
@@ -12,18 +15,60 @@ export default function PartnerFirmsPage() {
   return (
     <FirmPortalShell>
       <h1 className="mb-4 text-3xl font-bold text-[#0F172A]">{t("partnerFirms")}</h1>
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card>
+      <div className="grid gap-4 xl:grid-cols-[1.4fr_0.8fr]">
+        <Card className="overflow-hidden p-0">
+          <div className="border-b border-slate-100 px-5 py-4">
+            <CardTitle>{t("approvedPartners")}</CardTitle>
+          </div>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableHeaderCell>{t("partnerFirm")}</TableHeaderCell>
+                  <TableHeaderCell>{t("partnerStatus")}</TableHeaderCell>
+                  <TableHeaderCell>{t("contactPerson")}</TableHeaderCell>
+                  <TableHeaderCell>{t("serviceScope")}</TableHeaderCell>
+                  <TableHeaderCell>{t("assignedCasesCount")}</TableHeaderCell>
+                  <TableHeaderCell>{t("revisionRate")}</TableHeaderCell>
+                  <TableHeaderCell>{t("workload")}</TableHeaderCell>
+                  <TableHeaderCell>{t("action")}</TableHeaderCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {partnerFirms.map((partner) => (
+                  <TableRow key={partner.id}>
+                    <TableCell className="font-semibold">{partner.name}</TableCell>
+                    <TableCell><StatusBadge status={partner.status} /></TableCell>
+                    <TableCell>{partner.contactPerson}</TableCell>
+                    <TableCell className="min-w-60">{partner.serviceScope}</TableCell>
+                    <TableCell>{partner.assignedCasesCount}</TableCell>
+                    <TableCell>{partner.revisionRate}</TableCell>
+                    <TableCell>{partner.workload}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        <Button size="sm" variant="outline">{t("viewDetails")}</Button>
+                        {partner.status === "pending" ? <Button size="sm">{t("approve")}</Button> : <Button size="sm" variant="outline">{t("suspend")}</Button>}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </Card>
+        <div className="space-y-4">
+          <PartnerAssignmentPanel />
+          <Card>
           <CardTitle className="mb-3">{t("approvedPartners")}</CardTitle>
           <ul className="space-y-2 text-sm text-slate-700">
-            {approvedPartners.map((partner) => (
-              <li key={partner} className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2">
-                {partner}
+            {partnerFirms.filter((partner) => partner.status === "approved").map((partner) => (
+              <li key={partner.id} className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2">
+                {partner.name}
               </li>
             ))}
           </ul>
-        </Card>
-        <PartnerAssignmentPanel />
+          </Card>
+        </div>
       </div>
     </FirmPortalShell>
   );

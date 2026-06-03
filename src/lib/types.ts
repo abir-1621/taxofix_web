@@ -37,9 +37,20 @@ export interface User {
 export interface Client {
   id: string;
   name: string;
-  type: "company" | "individual";
+  type: "company" | "individual" | "sme" | "group_company";
   status: "active" | "pending" | "review";
   assignedTo: string;
+  tin: string;
+  bin?: string;
+  taxCircle: string;
+  taxZone: string;
+  vatCircle?: string;
+  contactEmail: string;
+  contactPhone: string;
+  activeCasesCount: number;
+  pendingDocumentsCount: number;
+  assignedStaff: string[];
+  clientUsers: string[];
 }
 
 export interface TaxCase {
@@ -47,13 +58,42 @@ export interface TaxCase {
   clientId: string;
   title: string;
   titleBn?: string;
+  caseType: "individual_income_tax" | "company_income_tax" | "vat_return" | "withholding_tax";
+  assessmentYear: string;
+  taxPeriod: string;
+  clientName: string;
+  assignedAccountant: string;
+  reviewer: string;
+  partnerFirm?: string;
+  deadline: string;
   taxYear: string;
-  status: "draft" | "in_review" | "filed";
+  status:
+    | "draft"
+    | "waiting_for_documents"
+    | "documents_uploaded"
+    | "document_checking"
+    | "under_preparation"
+    | "needs_client_clarification"
+    | "in_review"
+    | "approved"
+    | "ready_for_submission"
+    | "submitted"
+    | "acknowledged"
+    | "archived"
+    | "filed";
 }
 
 export interface VatPeriod {
   month: string;
   monthBn?: string;
+  clientName: string;
+  year: string;
+  sales: string;
+  purchases: string;
+  outputVat: string;
+  inputVat: string;
+  netPayable: string;
+  missingDocuments: number;
   status: "open" | "ready" | "submitted";
   dueDate: string;
 }
@@ -62,5 +102,21 @@ export interface ReviewFile {
   id: string;
   name: string;
   nameBn?: string;
-  status: "uploaded" | "checking" | "approved" | "rejected";
+  category: string;
+  caseTitle: string;
+  uploadedBy: string;
+  internalNote?: string;
+  clientNote?: string;
+  status: "uploaded" | "pending_check" | "checking" | "approved" | "accepted" | "rejected" | "needs_clarification" | "duplicate" | "archived";
+}
+
+export interface PartnerFirm {
+  id: string;
+  name: string;
+  status: "pending" | "approved" | "suspended" | "terminated";
+  contactPerson: string;
+  serviceScope: string;
+  assignedCasesCount: number;
+  revisionRate: string;
+  workload: string;
 }
