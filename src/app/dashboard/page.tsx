@@ -8,6 +8,7 @@ import { FirmPortalShell } from "@/components/FirmPortalShell";
 import { useI18n } from "@/components/I18nProvider";
 import { MetricCard } from "@/components/MetricCard";
 import { useMockAuth } from "@/components/MockAuthProvider";
+import { PageHeader, PageHeaderPill } from "@/components/PageHeader";
 import { PartnerAssignmentPanel } from "@/components/PartnerAssignmentPanel";
 import { PermissionGate } from "@/components/PermissionGate";
 import { RoleGuard } from "@/components/RoleGuard";
@@ -24,17 +25,14 @@ export default function DashboardPage() {
 
   return (
     <Shell>
-      <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-        <div>
-          <p className="text-sm font-bold uppercase text-[#006A4E]">{t("overview")}</p>
-          <h1 className="mt-1 text-3xl font-bold text-[#0F172A]">
-            {t(roleLabelKeys[currentRole])} {t("dashboard")}
-          </h1>
-          <p className="mt-2 text-sm text-slate-600">
-            {t("signedInAs")} {currentUser.name}
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow={t("overview")}
+        title={`${t(roleLabelKeys[currentRole])} ${t("dashboard")}`}
+        description={`${t("signedInAs")} ${currentUser.name}. ${t("pageDashboardDescription")}`}
+      >
+        <PageHeaderPill className="border-[#006A4E]/20 bg-[#006A4E]/10 text-[#006A4E]">{t("mockMode")}</PageHeaderPill>
+        <PageHeaderPill>{t("primaryFirmControlled")}</PageHeaderPill>
+      </PageHeader>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {metrics.map((metric, index) => (

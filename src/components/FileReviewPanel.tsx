@@ -28,9 +28,9 @@ export function FileReviewPanel({ files }: { files: ReviewFile[] }) {
                 <StatusBadge status={file.status} />
               </div>
               <div className="mt-3 flex flex-wrap gap-2">
-                <Button size="sm" variant="outline"><Eye className="mr-1 h-3.5 w-3.5" />{t("viewDetails")}</Button>
+                <Button size="sm" variant="outline"><Eye className="h-3.5 w-3.5" />{t("viewDetails")}</Button>
                 {file.status === "rejected" || file.status === "needs_clarification" ? (
-                  <Button size="sm" variant="outline"><RotateCcw className="mr-1 h-3.5 w-3.5" />{t("replaceFile")}</Button>
+                  <Button size="sm" variant="outline"><RotateCcw className="h-3.5 w-3.5" />{t("replaceFile")}</Button>
                 ) : null}
               </div>
             </div>
@@ -43,9 +43,9 @@ export function FileReviewPanel({ files }: { files: ReviewFile[] }) {
           </div>
           <CardDescription className="mt-3">{activeFile.internalNote ?? t("reviewHistoryTimeline")}</CardDescription>
           <div className="mt-4 grid gap-2">
-            <Button><ThumbsUp className="mr-2 h-4 w-4" />{t("acceptFile")}</Button>
-            <Button variant="outline"><ThumbsDown className="mr-2 h-4 w-4" />{t("rejectFile")}</Button>
-            <Button variant="outline"><MessageSquareText className="mr-2 h-4 w-4" />{t("requestClarification")}</Button>
+            <Button><ThumbsUp className="h-4 w-4" />{t("acceptFile")}</Button>
+            <Button variant="outline"><ThumbsDown className="h-4 w-4" />{t("rejectFile")}</Button>
+            <Button variant="outline"><MessageSquareText className="h-4 w-4" />{t("requestClarification")}</Button>
           </div>
         </div>
       </div>

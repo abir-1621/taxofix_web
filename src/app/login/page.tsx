@@ -30,7 +30,7 @@ export default function LoginPage() {
 
         <div className="mt-5 space-y-3">
           <Button className="w-full bg-white text-slate-900 ring-1 ring-slate-200 hover:bg-slate-50" type="button" onClick={goToDashboard}>
-            <span className="mr-2 flex h-5 w-5 items-center justify-center rounded-full border border-slate-300 text-xs font-bold text-[#E11D48]">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full border border-slate-300 text-xs font-bold text-[#E11D48]">
               G
             </span>
             {t("continueWithGoogle")}
@@ -47,11 +47,11 @@ export default function LoginPage() {
             <Input className="pl-9" placeholder={t("phoneNumber")} type="tel" />
           </div>
           <Button className="w-full" type="button" onClick={goToDashboard}>
-            <Phone className="mr-2 h-4 w-4" />
+            <Phone className="h-4 w-4" />
             {t("sendMockOtp")}
           </Button>
           <Button className="w-full" variant="outline" type="button" onClick={goToDashboard}>
-            <Mail className="mr-2 h-4 w-4" />
+            <Mail className="h-4 w-4" />
             {t("useEmailMock")}
           </Button>
         </form>

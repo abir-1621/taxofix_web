@@ -6,9 +6,10 @@ import { useMemo, useState } from "react";
 
 import { useI18n } from "@/components/I18nProvider";
 import { StatusBadge } from "@/components/StatusBadge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from "@/components/ui/table";
 import type { Client } from "@/lib/types";
 
@@ -34,24 +35,24 @@ export function ClientTable({ rows }: { rows: Client[] }) {
       <div className="space-y-4 border-b border-slate-100 px-5 py-4">
         <div className="flex flex-col justify-between gap-3 lg:flex-row lg:items-center">
           <CardTitle>{t("clientPortfolio")}</CardTitle>
-          <div className="grid gap-2 sm:grid-cols-[1fr_auto_auto]">
+          <div className="grid gap-2 sm:grid-cols-[minmax(16rem,1fr)_auto_auto]">
             <div className="relative">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-              <Input className="min-w-64 pl-9" placeholder={t("searchClients")} value={query} onChange={(event) => setQuery(event.target.value)} />
+              <Input className="pl-9" placeholder={t("searchClients")} value={query} onChange={(event) => setQuery(event.target.value)} />
             </div>
-            <select className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700" value={status} onChange={(event) => setStatus(event.target.value)}>
+            <Select className="h-11 min-w-40" value={status} onChange={(event) => setStatus(event.target.value)}>
               <option value="all">{t("allStatuses")}</option>
               <option value="active">{t("active")}</option>
               <option value="pending">{t("pending")}</option>
               <option value="review">{t("review")}</option>
-            </select>
-            <select className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700" value={type} onChange={(event) => setType(event.target.value)}>
+            </Select>
+            <Select className="h-11 min-w-40" value={type} onChange={(event) => setType(event.target.value)}>
               <option value="all">{t("allTypes")}</option>
               <option value="company">{t("company")}</option>
               <option value="group_company">{t("group_company")}</option>
               <option value="sme">{t("sme")}</option>
               <option value="individual">{t("individual")}</option>
-            </select>
+            </Select>
           </div>
         </div>
       </div>
@@ -71,7 +72,7 @@ export function ClientTable({ rows }: { rows: Client[] }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredRows.map((client) => (
+            {filteredRows.length ? filteredRows.map((client) => (
               <TableRow key={client.id}>
                 <TableCell>
                   <Link href={`/clients/${client.id}`} className="font-semibold text-[#0F172A] hover:text-[#006A4E]">
@@ -89,12 +90,18 @@ export function ClientTable({ rows }: { rows: Client[] }) {
                 <TableCell>{client.activeCasesCount}</TableCell>
                 <TableCell>{client.pendingDocumentsCount}</TableCell>
                 <TableCell>
-                  <Link href={`/clients/${client.id}`}>
-                    <Button size="sm" variant="outline">{t("viewProfile")}</Button>
+                  <Link href={`/clients/${client.id}`} className={buttonVariants({ size: "sm", variant: "outline" })}>
+                    {t("viewProfile")}
                   </Link>
                 </TableCell>
               </TableRow>
-            ))}
+            )) : (
+              <TableRow>
+                <TableCell colSpan={9} className="py-10 text-center text-sm font-semibold text-slate-500">
+                  {t("noClientsMatch")}
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div>

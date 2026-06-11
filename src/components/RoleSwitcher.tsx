@@ -4,6 +4,7 @@ import { roleLabelKeys, usersByRole } from "@/lib/mock-data";
 import type { Role } from "@/lib/types";
 import { useI18n } from "@/components/I18nProvider";
 import { useMockAuth } from "@/components/MockAuthProvider";
+import { Select } from "@/components/ui/select";
 
 export function RoleSwitcher() {
   const { t } = useI18n();
@@ -12,8 +13,8 @@ export function RoleSwitcher() {
   return (
     <label className="flex flex-col gap-1 text-xs font-semibold text-slate-500">
       {t("developmentRole")}
-      <select
-        className="h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-800 shadow-sm outline-none ring-[#006A4E] focus:ring-2"
+      <Select
+        className="h-10 min-w-44"
         value={currentRole}
         onChange={(event) => switchRole(event.target.value as Role)}
         aria-label={t("switchRole")}
@@ -23,7 +24,7 @@ export function RoleSwitcher() {
             {t(roleLabelKeys[role])}
           </option>
         ))}
-      </select>
+      </Select>
     </label>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown, Languages } from "lucide-react";
+import { Check, Languages } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { useI18n } from "@/components/I18nProvider";
@@ -38,20 +38,21 @@ export function LanguageToggle() {
         type="button"
         aria-label={t("languageMenu")}
         aria-expanded={open}
-        className="inline-flex h-10 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 text-sm font-black text-slate-700 shadow-sm outline-none ring-[#006A4E] transition hover:bg-slate-50 focus-visible:ring-2"
+        aria-haspopup="menu"
+        title={t("languageMenu")}
+        className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm outline-none ring-[#006A4E] transition hover:bg-slate-50 focus-visible:ring-2"
         onClick={() => setOpen((value) => !value)}
       >
         <Languages className="h-4 w-4 text-[#006A4E]" />
-        <span>{language === "en" ? t("languageEnglish") : t("languageBangla")}</span>
-        <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
       </button>
 
       {open ? (
-        <div className="absolute right-0 z-40 mt-2 min-w-36 rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
+        <div className="absolute right-0 z-40 mt-2 min-w-36 rounded-xl border border-slate-200 bg-white p-1 shadow-lg" role="menu">
           {languageOptions.map((option) => (
             <button
               key={option.value}
               type="button"
+              role="menuitem"
               className="flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm font-semibold text-slate-700 outline-none hover:bg-[#006A4E]/10 hover:text-[#006A4E] focus-visible:bg-[#006A4E]/10"
               onClick={() => chooseLanguage(option.value)}
             >

@@ -1,8 +1,11 @@
 "use client";
 
+import { UserPlus } from "lucide-react";
+
 import { PartnerAssignmentPanel } from "@/components/PartnerAssignmentPanel";
 import { FirmPortalShell } from "@/components/FirmPortalShell";
 import { useI18n } from "@/components/I18nProvider";
+import { PageHeader, PageHeaderPill } from "@/components/PageHeader";
 import { StatusBadge } from "@/components/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
@@ -14,7 +17,20 @@ export default function PartnerFirmsPage() {
 
   return (
     <FirmPortalShell>
-      <h1 className="mb-4 text-3xl font-bold text-[#0F172A]">{t("partnerFirms")}</h1>
+      <PageHeader
+        eyebrow={t("partnerCapacity")}
+        title={t("partnerFirms")}
+        description={t("pagePartnersDescription")}
+        actions={
+          <Button type="button">
+            <UserPlus className="h-4 w-4" />
+            {t("invitePartner")}
+          </Button>
+        }
+      >
+        <PageHeaderPill>{partnerFirms.length} {t("partnerFirms")}</PageHeaderPill>
+        <PageHeaderPill className="border-[#006A4E]/20 bg-[#006A4E]/10 text-[#006A4E]">{t("limitedPartnerAccess")}</PageHeaderPill>
+      </PageHeader>
       <div className="grid gap-4 xl:grid-cols-[1.4fr_0.8fr]">
         <Card className="overflow-hidden p-0">
           <div className="border-b border-slate-100 px-5 py-4">

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useSyncExternalStore } from "react";
 
 import { STORAGE_KEY, translations, type TranslationKey } from "@/lib/i18n";
 import type { Language } from "@/lib/types";
@@ -12,6 +12,7 @@ type I18nContextValue = {
 };
 
 const I18nContext = createContext<I18nContextValue | null>(null);
+const LANGUAGE_EVENT = "taxofix-language-change";
 
 const getSavedLanguage = (): Language => {
   if (typeof window === "undefined") {
@@ -22,8 +23,23 @@ const getSavedLanguage = (): Language => {
   return saved === "bn" ? "bn" : "en";
 };
 
+const getDefaultLanguage = (): Language => "en";
+
+const subscribeToLanguage = (callback: () => void) => {
+  if (typeof window === "undefined") {
+    return () => {};
+  }
+
+  window.addEventListener("storage", callback);
+  window.addEventListener(LANGUAGE_EVENT, callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(LANGUAGE_EVENT, callback);
+  };
+};
+
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(getSavedLanguage);
+  const language = useSyncExternalStore<Language>(subscribeToLanguage, getSavedLanguage, getDefaultLanguage);
 
   useEffect(() => {
     document.documentElement.lang = language;
@@ -31,8 +47,8 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo<I18nContextValue>(() => {
     const setLanguage = (nextLanguage: Language) => {
-      setLanguageState(nextLanguage);
       window.localStorage.setItem(STORAGE_KEY, nextLanguage);
+      window.dispatchEvent(new Event(LANGUAGE_EVENT));
       document.documentElement.lang = nextLanguage;
     };
 
